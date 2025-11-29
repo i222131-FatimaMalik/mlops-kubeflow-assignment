@@ -1,0 +1,48 @@
+name: MLflow Pipeline CI
+
+# Trigger the workflow on push or pull request to main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  mlflow-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Step 2: Set up Python environment
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    # Step 3: Install Python dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Step 4: Set environment variable for MLflow tracking (optional)
+    - name: Set MLflow tracking folder
+      run: |
+        mkdir -p mlruns-ci
+      env:
+        MLFLOW_TRACKING_URI: ./mlruns-ci
+
+    # Step 5: Run the MLflow pipeline
+    - name: Run MLflow pipeline
+      run: |
+        python pipeline.py
+
+    # Optional: Upload MLflow artifacts (if needed)
+    - name: Upload MLflow runs
+      uses: actions/upload-artifact@v3
+      with:
+        name: mlflow-artifacts
+        path: mlruns-ci
