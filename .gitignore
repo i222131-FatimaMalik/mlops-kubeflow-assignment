@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+*.env
+.venv/
+
+# MLflow
+mlruns/
+*.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Models & Artifacts
+model.joblib
+metrics.txt
+*.h5
+*.pkl
+
+# Pytest
+.pytest_cache/
